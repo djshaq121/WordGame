@@ -1,0 +1,16 @@
+<h6>Timer</h6>
+
+<div>
+    <input [disabled]="true" [(ngModel)]="wordToCheck" type="text">
+    <button (click)="submitWord()"> Check Word </button>
+</div>
+
+
+<div>
+    <app-tile *ngFor="let letter of letters.startingLetters; let i = index" [letter]="letter" [position]="i" (notifyGame)="addLetter($event)"></app-tile>
+</div>
+
+
+<div>
+    <app-word-bank></app-word-bank>
+</div>

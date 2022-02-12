@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WordGameAPI.Dto
+namespace WordGameAPI
 {
-    public class PointsDto
+    public class WordParams
     {
-        public int Points { get; set; } = 0;
-
         public string Word { get; set; }
     }
 }

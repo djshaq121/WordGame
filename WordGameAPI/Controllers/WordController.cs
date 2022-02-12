@@ -35,17 +35,18 @@ namespace WordGameAPI.Controllers
 
         [HttpPost]
         [Route("submit-word")]
-        public async Task<ActionResult<PointsDto>> SubmitWord(string word)
+        public async Task<ActionResult<PointsDto>> SubmitWord(WordParams wordParams)
         {
-            var result = await wordService.ValidateWord(word);
+            var result = await wordService.ValidateWord(wordParams.Word);
 
             if (!result)
                 return NotFound("Word not found");
 
-            var points = wordService.PointsForWord(word);
+            var points = wordService.PointsForWord(wordParams.Word);
             var pointsDto = new PointsDto
             {
-                Points = points
+                Points = points,
+                Word = wordParams.Word
             };
 
             return Ok(pointsDto);
