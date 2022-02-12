@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
+import { PointsService } from '../services/points.service';
 import { WordBankService } from '../services/word-bank.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { WordBankService } from '../services/word-bank.service';
 })
 export class GameComponent implements OnInit {
 
-  constructor(private gameService: GameService, private wordBankService: WordBankService) { }
+  constructor(private gameService: GameService, private wordBankService: WordBankService, public pointService: PointsService) { }
   letters: any = [];
   wordToCheck: string = "";
   points: number = 0;
@@ -33,9 +34,13 @@ export class GameComponent implements OnInit {
     {
       this.wordBankService.addWord(response);
     }, err => {
-
+        console.log(err);
     });
 
+    this.wordToCheck = "";
+  }
+
+  clearWord() {
     this.wordToCheck = "";
   }
 }

@@ -8,6 +8,7 @@ import { GameComponent } from './game/game.component';
 import { TileComponent } from './tile/tile.component';
 import { FormsModule } from '@angular/forms';
 import { WordBankComponent } from './word-bank/word-bank.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { WordBankComponent } from './word-bank/word-bank.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

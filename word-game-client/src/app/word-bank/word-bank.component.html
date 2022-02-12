@@ -1,6 +1,6 @@
 <div>
     <h3>Word Bank</h3>
-    <ul>
+    <ul class="wordList">
         <li *ngFor="let item of (wordBankService.wordBank$ | async)"> 
             {{item}}
         </li>

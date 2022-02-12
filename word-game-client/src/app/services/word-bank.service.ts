@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Word } from '../model/word';
+import { PointsService } from './points.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class WordBankService {
   private currentWordBankSource = new BehaviorSubject<string[]>([]);
   wordBank$ = this.currentWordBankSource.asObservable();
 
-  constructor() { }
+  constructor(private pointService: PointsService) { }
 
   reset() {
     this.currentWordBankSource.next([]);
@@ -24,6 +25,7 @@ export class WordBankService {
       this.currentWordBankSource.next(wordBank);
 
       // update points
+      this.pointService.addPoints(wordToAdd.points);
     }
   }
 

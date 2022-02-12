@@ -31,11 +31,12 @@ namespace WordGameAPI.Services
             }
 
             var lettersToAdd = startingLetters - vowelMin;
-
+            var tempCosnats = new List<char>(consonants);
             for (int i = 0; i < lettersToAdd; i++)
             {
-                var randomNumber = rand.Next(0, consonants.Count - 1);
-                var letter = consonants[randomNumber];
+                var randomNumber = rand.Next(0, tempCosnats.Count - 1);
+                var letter = tempCosnats[randomNumber];
+                tempCosnats.RemoveAt(randomNumber);
                 output.Add(letter);
             }
 
