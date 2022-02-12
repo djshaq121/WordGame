@@ -45,7 +45,7 @@ namespace WordGameAPI.Services
 
         public async Task<bool> ValidateWord(string word)
         {
-            return Task.FromResult(true).Result;
+            return Task.FromResult(true).Result; // Can't find any free apis so just accept all words for now
             if (string.IsNullOrWhiteSpace(word) || word.Length < 2)
                 return Task.FromResult(false).Result;
 
@@ -68,7 +68,7 @@ namespace WordGameAPI.Services
             var wordLength = word.Length;
             if (wordLength < 3)
                 points = 0;
-            else if (wordLength < 5)
+            else if (wordLength <= 5)
                 points = 2;
             else if (wordLength == 6)
                 points = 3;
