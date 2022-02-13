@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { WordBankComponent } from './word-bank/word-bank.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CountdownModule } from 'ngx-countdown';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,12 @@ import { CountdownModule } from 'ngx-countdown';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    CountdownModule
+    CountdownModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

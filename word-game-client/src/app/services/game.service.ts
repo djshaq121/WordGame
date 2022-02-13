@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StartingBoard } from '../model/startingLetters';
 import { Word } from '../model/word';
+import { WordBankService } from './word-bank.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +17,10 @@ export class GameService {
   private currentLettersSource = new BehaviorSubject<string[]>([]);
   letters$ = this.currentLettersSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private wordBankService: WordBankService, private toastr: ToastrService) { }
 
   startGame() {
+
     this.getStartingLetters().subscribe((response: any) => {
       this.currentLettersSource.next(response.startingLetters);
     }, err => {
@@ -35,6 +38,22 @@ export class GameService {
   }
 
   checkWord(wordToCheck: string) {
+    if(this.wordBankService.checkIfWordExist(wordToCheck))
+    {
+      this.toastr.error(`${wordToCheck} is found already`);
+      return;
+    }
+
+
+    this.verifyWord(wordToCheck).subscribe((response) =>
+    {
+      this.wordBankService.addWord(response);
+    }, err => {
+      this.toastr.error("Not a valid word");
+    });
+  }
+
+  verifyWord(wordToCheck: string) {
     return this.http.post<Word>(this.baseUrl + 'submit-word', { word: wordToCheck });
   }
 }

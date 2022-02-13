@@ -15,7 +15,7 @@ export class GameComponent implements OnInit {
   constructor(public gameService: GameService, private wordBankService: WordBankService, public pointService: PointsService) { }
   wordToCheck: string = "";
   points: number = 0;
-  config: CountdownConfig = { leftTime: 10 };
+  config: CountdownConfig = { leftTime: 90 };
  
   ngOnInit(): void {
 
@@ -31,13 +31,7 @@ export class GameComponent implements OnInit {
   }
 
   submitWord() {
-    this.gameService.checkWord(this.wordToCheck).subscribe((response) =>
-    {
-      this.wordBankService.addWord(response);
-    }, err => {
-        console.log(err);
-    });
-
+    this.gameService.checkWord(this.wordToCheck);
     this.wordToCheck = "";
   }
 

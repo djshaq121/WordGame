@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Word } from '../model/word';
 import { PointsService } from './points.service';
@@ -11,7 +12,7 @@ export class WordBankService {
   private currentWordBankSource = new BehaviorSubject<string[]>([]);
   wordBank$ = this.currentWordBankSource.asObservable();
 
-  constructor(private pointService: PointsService) { }
+  constructor(private pointService: PointsService, private toastr: ToastrService) { }
 
   reset() {
     this.currentWordBankSource.next([]);
@@ -26,6 +27,8 @@ export class WordBankService {
 
       // update points
       this.pointService.addPoints(wordToAdd.points);
+    }else{
+      this.toastr.error(`${wordToAdd} is found already`);
     }
   }
 

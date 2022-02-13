@@ -1,21 +1,25 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WordGameAPI.Services
 {
     public class WordService : IWordService
     {
+        private readonly IConfiguration configuration;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly int startingLetters = 12;
         private readonly int vowelMin = 4;
         private readonly List<char> vowels =  new() { 'A', 'E', 'I', 'O', 'U' };
         private readonly List<char> consonants = new() { 'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z', 'W', 'Y' };
-        public WordService(IHttpClientFactory httpClientFactory)
+        public WordService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             this.httpClientFactory = httpClientFactory;
+            this.configuration = configuration;
         }
 
         public List<char> GenerateStartingLetters()
@@ -45,19 +49,37 @@ namespace WordGameAPI.Services
 
         public async Task<bool> ValidateWord(string word)
         {
-            return Task.FromResult(true).Result; // Can't find any free apis so just accept all words for now
-            if (string.IsNullOrWhiteSpace(word) || word.Length < 2)
+            if (string.IsNullOrWhiteSpace(word) || word.Length < 3)
                 return Task.FromResult(false).Result;
 
             var httpClient = httpClientFactory.CreateClient();
 
-            var url = "https://dictionaryapi.dev";
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-
+            var requestUri = new Uri($"https://twinword-word-graph-dictionary.p.rapidapi.com/definition/?entry={word}");
+            //var url = "https://dictionaryapi.dev";
+            var request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = requestUri,
+                Headers =
+                {
+                    { "x-rapidapi-host", "twinword-word-graph-dictionary.p.rapidapi.com" },
+                    { "x-rapidapi-key", configuration["TwinWordApiKey"] },
+                },
+            }; 
+           
             var response = await httpClient.SendAsync(request);
 
             if(!response.IsSuccessStatusCode)
                 return Task.FromResult(false).Result;
+
+            using (var result = await response.Content.ReadAsStreamAsync())
+            {
+                var wordModel = await JsonSerializer.DeserializeAsync<WordModel>(result);
+                
+                if(wordModel.ResultCode != "200")
+                    return Task.FromResult(false).Result;
+
+            }
 
             return Task.FromResult(true).Result;
         }

@@ -4,13 +4,14 @@
         <h6 class="col-12">Timer</h6>
         <countdown #cd [config]="config" (event)="countDown($event)"></countdown>
 
-        <div class="col-12 mt-5 mb-3">
+
+
+        <div class="col-12 mt-5 mb-5">
             <div class="mb-2">Points: {{pointService.points$ | async}}</div>
             <input [disabled]="true" [(ngModel)]="wordToCheck" type="text">
             <button class="brn btn-primary" (click)="submitWord()"> Check Word </button>
             <button class="brn btn-secondary" (click)="clearWord()"> Clear Word </button>
         </div>
-        
         
         <div class="col-md-6">
 
