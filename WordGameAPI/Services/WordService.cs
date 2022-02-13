@@ -49,6 +49,7 @@ namespace WordGameAPI.Services
 
         public async Task<bool> ValidateWord(string word)
         {
+            word = word.Trim();
             if (string.IsNullOrWhiteSpace(word) || word.Length < 3)
                 return Task.FromResult(false).Result;
 
@@ -86,6 +87,8 @@ namespace WordGameAPI.Services
 
         public int PointsForWord(string word)
         {
+            word = word.Trim();
+
             var points = 0;
             var wordLength = word.Length;
             if (wordLength < 3)
