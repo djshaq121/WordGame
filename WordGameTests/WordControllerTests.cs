@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WordGameAPI;
 using WordGameAPI.Controllers;
 using WordGameAPI.Dto;
+using WordGameAPI.Params;
 using WordGameAPI.Services;
 using Xunit;
 

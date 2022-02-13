@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WordGameAPI.Dto;
+using WordGameAPI.Params;
 using WordGameAPI.Services;
 
 namespace WordGameAPI.Controllers

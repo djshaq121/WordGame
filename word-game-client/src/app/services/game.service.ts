@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { StartingBoard } from '../model/startingLetters';
 import { Word } from '../model/word';
 import { WordBankService } from './word-bank.service';
@@ -12,7 +13,7 @@ import { WordBankService } from './word-bank.service';
 })
 export class GameService {
 
-  baseUrl: string = "https://localhost:5001/api/Word/";
+  baseUrl: string = environment.apiUrl;
 
   private currentLettersSource = new BehaviorSubject<string[]>([]);
   letters$ = this.currentLettersSource.asObservable();
@@ -34,7 +35,7 @@ export class GameService {
 
 
   getStartingLetters() {
-    return this.http.get(this.baseUrl + 'start-game');
+    return this.http.get(this.baseUrl + 'Word/start-game');
   }
 
   checkWord(wordToCheck: string) {
@@ -54,6 +55,6 @@ export class GameService {
   }
 
   verifyWord(wordToCheck: string) {
-    return this.http.post<Word>(this.baseUrl + 'submit-word', { word: wordToCheck });
+    return this.http.post<Word>(this.baseUrl + 'Word/submit-word', { word: wordToCheck });
   }
 }

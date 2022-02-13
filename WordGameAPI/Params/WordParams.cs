@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WordGameAPI
+namespace WordGameAPI.Params
 {
     public class WordParams
     {
