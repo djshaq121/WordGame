@@ -9,6 +9,7 @@ import { TileComponent } from './tile/tile.component';
 import { FormsModule } from '@angular/forms';
 import { WordBankComponent } from './word-bank/word-bank.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

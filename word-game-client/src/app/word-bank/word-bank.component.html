@@ -1,7 +1,7 @@
-<div>
+<div class="wordBank">
     <h3>Word Bank</h3>
-    <ul class="wordList">
-        <li *ngFor="let item of (wordBankService.wordBank$ | async)"> 
+    <ul class="wordList list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let item of (wordBankService.wordBank$ | async)"> 
             {{item}}
         </li>
     </ul>

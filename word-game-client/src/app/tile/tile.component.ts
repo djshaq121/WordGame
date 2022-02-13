@@ -9,7 +9,6 @@ export class TileComponent implements OnInit {
 
   constructor() { }
   @Input() letter = '';
-  @Input() position: number = -1;
   @Output() notifyGame: EventEmitter<any> = new EventEmitter();
   
   ngOnInit(): void {

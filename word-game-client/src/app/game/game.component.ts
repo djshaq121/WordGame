@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { GameService } from '../services/game.service';
 import { PointsService } from '../services/points.service';
 import { WordBankService } from '../services/word-bank.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -10,19 +12,18 @@ import { WordBankService } from '../services/word-bank.service';
 })
 export class GameComponent implements OnInit {
 
-  constructor(private gameService: GameService, private wordBankService: WordBankService, public pointService: PointsService) { }
-  letters: any = [];
+  constructor(public gameService: GameService, private wordBankService: WordBankService, public pointService: PointsService) { }
   wordToCheck: string = "";
   points: number = 0;
-
+  config: CountdownConfig = { leftTime: 10 };
+ 
   ngOnInit(): void {
+
     this.beginGame();
   }
 
   beginGame() {
-    this.gameService.getStartingLetters().subscribe(response => {
-       this.letters = response;
-    });
+    this.gameService.startGame()
   }
 
   addLetter(letter: string) {
@@ -42,5 +43,17 @@ export class GameComponent implements OnInit {
 
   clearWord() {
     this.wordToCheck = "";
+  }
+
+  countDown(event: CountdownEvent) {
+   
+    if(event.action === 'done')
+    {
+       console.log(event);
+        this.gameService.endGame();
+        let userPoints: number = 0;
+        this.pointService.points$.pipe(take(1)).subscribe(points => userPoints = points);
+        alert(`Your Score: ${userPoints}`);
+    }
   }
 }

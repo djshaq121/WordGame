@@ -1,11 +1,16 @@
 .tiles {
     display: inline-flex;
     text-transform:uppercase;
-    position:relative;
     font-weight:bold;
     border: 5px solid;
     border-width: 0 5px 5px 0;
-    border-image: linear-gradient(45deg,#0000 6px,#d0cfcd 0 calc(100% - 0.707*(1ch + 4px + 1em)),#b1b1b1 0 calc(100% - 6px),#0000 0) 5;
     font-size: large;
     margin: 5px;
+    background: white;
+    justify-content: center;
+    width: 10vmin;
+    height: 10vmin;
+    font-size: 6vmin;
+    cursor: pointer;
+    border-radius: 15px;
   }
